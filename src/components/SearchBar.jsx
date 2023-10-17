@@ -1,19 +1,39 @@
+import React, { useState } from "react";
 
+function SearchBar({ onSearch }) {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [showOnlyInStock, setShowOnlyInStock] = useState(false);
 
-function SearchBar(){
-return(
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    onSearch(event.target.value, showOnlyInStock);
+  };
 
+  const handleCheckboxChange = () => {
+    setShowOnlyInStock(!showOnlyInStock);
+    onSearch(searchTerm, !showOnlyInStock);
+  };
 
-<div className="searchProduct">
-<label>Search</label><br/>
-    <input type="search" className="w-100" />
-    <div>
-    <input type="checkbox"/>
-    <label>Only shows products in stock</label>
+  return (
+    <div className="searchProduct">
+      <label>Search</label>
+      <br />
+      <input
+        type="search"
+        className="w-100"
+        value={searchTerm}
+        onChange={handleSearch}
+      />
+      <div>
+        <input
+          type="checkbox"
+          checked={showOnlyInStock}
+          onChange={handleCheckboxChange}
+        />
+        <label>Only show products in stock</label>
+      </div>
     </div>
-
-</div>
-)
-
+  );
 }
+
 export default SearchBar;
